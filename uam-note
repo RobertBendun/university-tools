@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cwd=$(basename $(pwd))
+cwd="$(basename "$(pwd)")"
 category=$(echo "$cwd" | sed -r 's/(^|_)([a-z])/\1\U\2/g' | tr '_' ' ')
 
 name="$(git config --get user.name)"
