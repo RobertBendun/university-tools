@@ -1,12 +1,7 @@
 #!/bin/sh
 
-cwd="$(basename "$(pwd)")"
-category=$(echo "$cwd" | sed -r 's/(^|_)([a-z])/\1\U\2/g' | tr '_' ' ')
-
-name="$(git config --get user.name)"
-mail="$(git config --get user.email)"
-
-cat - << END
+print_file() {
+cat >"$target" - << END
 ---
 title: ""
 author: "$name ($mail)"
@@ -16,3 +11,34 @@ subtitle: "$category"
 lang: "pl"
 ---
 END
+}
+
+cwd="$(basename "$(pwd)")"
+category=$(echo "$cwd" | sed -r 's/(^|_)([a-z])/\1\U\2/g' | tr '_' ' ')
+
+name="$(git config --get user.name)"
+mail="$(git config --get user.email)"
+
+if [ -z "$1" ]; then
+	target="/dev/stdout"
+	print_file
+	exit
+fi
+
+target="$1"
+if [ -e "$target" ]; then
+	printf "File '$target' exists. Overwrite? [Y/n] "
+	read -n 1 -r
+	echo
+	case $REPLY in
+		y|Y ) ;;
+		* ) exit ;;
+	esac
+fi
+
+print_file
+
+case $2 in
+	o) $EDITOR "$target" ;;
+	open) $EDITOR "$target" ;;
+esac

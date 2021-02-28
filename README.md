@@ -8,7 +8,32 @@ __Wymagania:__
 
 ## `uam-note`
 
-Skrypt wypisuje na standardowe wyjście nagłówek notatki w Markdown. Przyjęte konwencje:
+Skrypt generuje notatki w Markdown.
+
+```
+uam-note
+uam-note nazwa_pliku [open]
+```
+
+Przyjęte konwencje:
 
 * nazwa użytkownika oraz adres email zawarte są w konfiguracji git'a
 * Working directory skryptu zapisany w `snake_case` jest podstawą nazwy przedmiotu
+* Preferowany edytor ustawiony w zmiennej `$EDITOR`
+
+### Użycie
+
+__Wypisanie nagłówka na stdout:__
+```sh
+uam-note
+```
+
+__Wypisanie nagłówka do pliku 'wykład 1':__
+```sh
+uam-note "wykład 1"
+```
+
+__Wypisanie nagłówka do pliku 'wykład 1' i natychmiastowa edycja__
+```sh
+uam-note "wykład 1" open
+```
