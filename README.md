@@ -37,3 +37,10 @@ __Wypisanie nagłówka do pliku 'wykład 1' i natychmiastowa edycja__
 ```sh
 uam-note "wykład 1" open
 ```
+
+## `list-colors.go`
+```
+go run list-colors.go pliki_png...
+```
+
+Wypisuje dla każdego pliku PNG 20 najpopularniejszych kolorów w formacie `#rrggbbaa`.
