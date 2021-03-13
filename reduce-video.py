@@ -1,25 +1,32 @@
-#!/bin/python3 convert.py
+#!/bin/python3
 
 from os import path, listdir, _exit
 from subprocess import run
 from sys import argv, exit
 
-# Extensions that are used to recognize input format. Must not include 
+# Extensions that are used to recognize input format. Must not include
 # output format extension
 Input_Format_Extensions = ['.mp4']
 Output_Format_Extension = '.mkv'
 
+def log(string):
+    print("[[" + path.basename(__file__) + "]] " + string)
+
 def convert(src, dest):
 	"Convert src file into dest file via ffmpeg"
-	command = f'ffmpeg -i {src} -c:v libx265 -preset slow {dest}'
-	print('$ ' + command)
+	command = f"ffmpeg -hide_banner -i '{src}' -c:v libx265 -preset ultrafast '{dest}'"
+	log('$ ' + command)
 	return run(command, shell=True).returncode == 0
 
 def process_file(input):
 	"If input file does not have matching output file, create it via convert function."
 	output = path.splitext(input)[0] + Output_Format_Extension
+	if path.isfile(output):
+	    log(f'skipping {input}')
+	    return
+
 	if not convert(input, output):
-		print(f'>>> Failed processing {input}')
+		log(f'Failed processing {input}')
 		exit(1)
 
 def process_directory(directory = '.'):
