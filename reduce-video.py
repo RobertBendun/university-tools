@@ -14,7 +14,7 @@ def log(string):
 
 def convert(src, dest):
 	"Convert src file into dest file via ffmpeg"
-	command = f"ffmpeg -hide_banner -i '{src}' -c:v libx265 -preset ultrafast '{dest}'"
+	command = f'ffmpeg -hide_banner -i "{src}" -c:v libx265 -preset ultrafast "{dest}"'
 	log('$ ' + command)
 	return run(command, shell=True).returncode == 0
 
